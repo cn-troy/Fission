@@ -1,0 +1,28 @@
+@charset "utf-8";
+@import "partial/header";
+
+
+.crumb{
+	width: 1180px;
+	margin:0 auto;
+	height: 60px;
+	line-height: 60px;
+	background: $public_color;
+	color: #99bfcf;
+	padding-left: 20px;
+	a, span{
+		color: #99bfcf;
+		padding: 0 5px 0 5px;
+	}
+
+	span{
+		color: #feffff;
+	}
+}
+
+
+
+
+
+
+

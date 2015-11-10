@@ -1,0 +1,35 @@
+@charset "utf-8";
+@import "util/var";
+
+body,p,ul,ol,h1,h2,h3,dl,dd,hr,input{
+    margin: 0;
+    padding: 0;
+}
+
+body, input, textarea{
+	font: $font;
+	background: $bg_color;
+}
+
+a{
+	text-decoration: none;
+    color: #000;
+}
+
+li{
+	list-style: none;
+}
+
+img{
+	border: 0 none;
+}
+
+.clear:after {
+    clear: both;
+    display: table;
+    content: "";
+}
+.clear {
+    *zoom: 1;
+}
+
