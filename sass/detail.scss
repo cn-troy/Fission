@@ -1,28 +1,273 @@
 @charset "utf-8";
 @import "partial/header";
+@import "util/mixin";
+@import "util/sprite";
 
-
-.crumb{
-	width: 1180px;
-	margin:0 auto;
-	height: 60px;
-	line-height: 60px;
-	background: $public_color;
-	color: #99bfcf;
-	padding-left: 20px;
-	a, span{
-		color: #99bfcf;
-		padding: 0 5px 0 5px;
-	}
-
-	span{
-		color: #feffff;
-	}
+.crumb {
+    width: 1180px;
+    margin: 0 auto;
+    height: 60px;
+    line-height: 60px;
+    background: $public_color;
+    color: #99bfcf;
+    padding-left: 20px;
+    a,
+    span {
+        color: #99bfcf;
+        padding: 0 5px 0 5px;
+    }
+    span {
+        color: #feffff;
+    }
 }
 
+.info-wrap {
+    @include frameCenter();
+}
+
+.left,
+.right {
+    width: 600px;
+    height: 708px;
+    float: left;
+}
+
+.left {
+    background: $public_color;
+}
+
+.right {
+    background: #ddd;
+}
+
+$right-item-width: 560px;
+.title {
+    width: $right-item-width;
+    height: 106px;
+    padding-left: 40px;
+    background: $public_color_deep;
+    position: relative;
+}
+
+h1 {
+    color: #fff;
+    font-size: 22px;
+    line-height: 106px;
+    width: 450px;
+}
+
+.love {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    top: 30px;
+    right: 60px;
+    @include sprite($icon-detail-love);
+}
+
+.loved {
+    @include sprite($icon-detail-loved);
+}
+
+.price-wrap {
+    width: $right-item-width;
+    height: 192px;
+    padding-left: 40px;
+    background: $public_color;
+    position: relative;
+    font-size: 15px;
+    color: #fff;
+}
+
+.price-now {
+    position: absolute;
+    top: 26px;
+    left: 32px;
+    font-size: 46px;
+}
+
+.price-old {
+    position: absolute;
+    top: 83px;
+    left: 40px;
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.remark {
+    position: absolute;
+    top: 117px;
+    left: 40px;
+    width: 355px;
+}
+
+.size-wrap {
+    width: $right-item-width;
+    height: 260px;
+    padding-left: 40px;
+    background: $public_color_deep;
+    border-bottom: 1px solid #454a4f;
+
+    .size-color-wrap {
+        width: 100%;
+        padding-top: 40px;
+    }
+    .color,
+    .size{
+        float: left;
+        color: #fff;
+        font-size: 16px;
+        dd {
+            padding-top: 12px;
+        }
+    }
+	
+    .size {
+        margin-left: 30px;
+    }
+    .count{
+        width: 140px;
+        float: left;
+        color: #fff;
+        font-size: 13px;
+        
+        dd {
+            padding-top: 30px;
+        }
+
+        dt{
+            line-height: 30px;
+        }
+    }
+    .count-action-wrap{
+    	clear:both;
+    }
+
+	.count-decrease, .count-increase{
+		width: 30px;
+		height: 60px;
+		float: left;
+		line-height: 60px;
+		background: $public_color;
+		text-align: center;
+		font-size: 28px;
+        color: #fff;
+	}
+
+	.count-increase{
+		margin-left: 4px; 
+		font-size: 18px;
+	}
+
+	.count-text{
+		width: 72px;
+		height: 60px;
+		float: left;
+		line-height: 60px;
+		background: $public_color;
+		border:none;
+		margin-left: 4px;
+		text-align: center;
+		color: #fff;
+		font-size:18px;
+		outline: none;
+	}
+
+	.action{
+		height: 60px;
+		float: left;
+		margin: 30px 0 0 31px;
+	}
+	.buy-now, .add-cart, .add-cart-disabled, .buy-now-disabled{
+		width:140px;
+		height: 60px;
+		float: left;
+		line-height: 60px;
+		text-align: center;
+		font-size: 18px;
+		font-weight: bold;
+	}
+	.buy-now{
+		color: #fff;
+		background: #ff9024;
+	}
+
+	.buy-now{
+		color: #fff;
+		background: #ff9024;
+		transition: background 300ms;
+		&:hover{
+			background: $public_color;
+		}
+	}
+	
+	.buy-now-disabled{
+		color: #dcdddd;
+		background: #969696;
+	}
+
+	.add-cart{
+		margin-left: 9px;
+		background: #f9e767;
+		color: #5a5a5a;
+		transition: background 300ms;
+		&:hover{
+			background: $public_color;
+			color: #fff;
+		}
+	}
+
+	.add-cart-disabled{
+		margin-left: 9px;
+		color: #969696;
+		background: #dcdddd;
+	}
 
 
+    select {
+        height: 33px;
+        line-height: 33px;
+        outline: none;
+        option{
+        	text-align: center;
+        }
+    }
+}
 
+.share-wrap {
+    width: $right-item-width;
+    height: 149px;
+    padding-left: 40px;
+    background: $public_color_deep;
+    li{
+        float: left;
+        margin-top: 62px;
+        a{
+            display: block;
+        }
+    }
+    
+    .weibo{
+        @include sprite($icon-sns-weibo);
+    }
 
+    .weichat{
+        margin-left: 25px;
+        @include sprite($icon-sns-weichat);
+    }
 
+    .qzone{
+        margin-left: 25px;
+        @include sprite($icon-sns-qzone);
+    }
 
+    .renren{
+        margin-left: 25px;
+        @include sprite($icon-sns-renren);
+    }
+
+    .douban{
+        margin-left: 25px;
+        @include sprite($icon-sns-douban);
+    }
+}
