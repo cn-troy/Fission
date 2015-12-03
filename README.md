@@ -5,7 +5,7 @@ fission是一个前端集成解决方案, 主要使用gulp作为工作流程管�
 
  - 可自动编译sass文件
  - 支持html模块化开发
- - 采用gulp最为底层, [插件](http://gulpjs.com/)丰富, 方便熟悉gulp的同学进行二次开发满足自己团队的需求
+ - 采用gulp作为底层, [插件](http://gulpjs.com/)丰富, 方便熟悉gulp的同学进行二次开发满足自己团队的需求
  - 对css资源自动添加MD5版本戳
  - 对css,html中图片自动添加域名前缀
  - 内置css中sprite图生成器, 简单易用
