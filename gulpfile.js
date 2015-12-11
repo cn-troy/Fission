@@ -11,11 +11,7 @@
 *         3. 加入对html中图片路径的替换
 *
 * PS: 对下一个版本的想法:
-*   1. 对多网站的支持, PC站与WebAPP站或更多站, 主要问题在图片,js,css可能都在同一域下
-*   2. 加入css, js等路径配置
-*   3. 优化生成算法
-*   4. 组件化开发模式
-*   5. 由于前面版本中没有对js的支持, 下一版本加入.
+*   1. 由于前面版本中没有对js的支持, 下一版本加入.
 */
 
 var gulp = require('gulp'),
@@ -42,7 +38,11 @@ var fissionConfig = {
     replace_image_folder_name: "image",
     //生成css文件之后, 图片文件的路径
     //可以为http://pic.fission.com/image
-    replace_image_http_path: "/image"
+    replace_image_http_path: "/image",
+    //browser-sync访问页面的端口
+    local_port: 8080,
+    //browser-sync访问的默认页面
+    local_default_page: "detail.html"
 };
 
 var task_function = {
@@ -120,10 +120,10 @@ gulp.task('browser-sync', function() {
             //root目录位置 gulp中./代表gulpfile.js存在的文件夹
             baseDir: "./wwwroot",
             //自动打开网页时, 默认显示的页面
-            index: "detail.html"
+            index: fissionConfig.local_default_page
         },
         //自定义端口,官方默认为3000
-        port: 8080
+        port: fissionConfig.local_port
     });
 });
 
