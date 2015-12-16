@@ -1,10 +1,126 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    @@@include("partial/mate.html")
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css?v=version">
+    <script type="text/javascript" src="js/index.js?v=version"></script>
 </head>
+
 <body>
-	<h1>测试browser-sycn, 与Gulp相结合的使用.</h1>
+    <section class="download">
+        <a href="" class="close"></a>
+        <h1><a href="" class="logo"></a></h1>
+        <a href="" class="btn"></a>
+    </section>
+    <section class="slider">
+    	<!--这里需要使用js修改宽度, ul是所有li宽度总和, li是屏幕的宽度-->
+        <ul style="width: 980px;">
+            <li style="width:490px;">
+                <a href="#"><img src="image/slider/201512091114203704.jpg?v=version" alt=""></a>
+            </li><li style="width:490px;">
+                <a href="#"><img src="image/slider/201512091114203704.jpg?v=version" alt=""></a>
+            </li>
+        </ul>
+    </section>
+    <section class="quick-entry-nav">
+    	<a href="">
+    		<p>签到</p>
+		</a><a href="">
+    		<p>抽奖</p>
+		</a><a href="">
+    		<p>试吃</p>
+		</a><a href="">
+    		<p>订单</p>
+		</a>
+    </section>
+    <section class="today-sale-warp">
+    	<h2>今日特卖</h2>
+    	<ul class="module">
+    		<li>
+    			<span class="timeout">剩5天20:36:12</span>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg?v=version" alt=""></a>
+    		</li>
+    		<li>
+    			<span class="sellout">已抢光</span>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    	</ul>
+    </section>
+    <section class="next-sale-warp">
+    	<h2>下期特卖</h2>
+    	<ul class="module">
+    		<li>
+    			<span class="not-bigin-warp">
+    				<span class="not-bigin-text">即将开始<i>2015-02-12</i></span>
+				</span>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<span class="not-bigin-warp">
+    				<span class="not-bigin-text">即将开始<i>2015-02-12</i></span>
+				</span>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<span class="not-bigin-warp">
+    				<span class="not-bigin-text">即将开始<i>2015-02-12</i></span>
+				</span>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<span class="not-bigin-warp">
+    				<span class="not-bigin-text">即将开始<i>2015-02-12</i></span>
+				</span>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    	</ul>
+    </section>
+    <section class="event-sale-warp">
+    	<h2>主题活动</h2>
+    	<ul class="module">
+    		<li>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    		<li>
+    			<a href="#"><img src="image/slider/201512071104584827.jpg" alt=""></a>
+    		</li>
+    	</ul>
+    </section>
+    <section class="curr-week-sale-warp">
+    	<h2>本周热卖</h2>
+    	<a href="#" class="module-inline">
+    		<img src="image/slider/201512020939418826.jpg" alt="">
+    		<div class="sale-detail-warp">
+    			<h3>【微卤】四川卤菜麻辣藕片180g </h3>
+    			<span class="price">200.00</span>
+    			<del>200.00</del>
+    		</div>
+    	</a>
+    	<a href="#" class="module-inline">
+    		<img src="image/slider/201512020939418826.jpg" alt="">
+    		<div class="sale-detail-warp">
+    			<h3>【微卤】四川卤菜麻辣藕片180g </h3>
+    			<span class="price">200.00</span>
+    			<del>200.00</del>
+    		</div>
+    	</a>
+    </section>
+    @@@include("partial/nav.html")
+
 </body>
+
 </html>

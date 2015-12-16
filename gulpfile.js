@@ -1,24 +1,28 @@
 /*
-* Fission 前端集成开发环境 v0.0.4
-* Copyright 2015, Troy
-* Create: 2015-11-3
-* Update: 2015年12月3日16:44:26
-* Remark: 1. 大幅修改文件结构, 这样构建有助于更清晰的对前端进行开发
-*            wwwroot文件夹为发布后的文件存放地, 可以直接映射IIS进行访问
-*            src为开发资源文件夹,存放各种原始文件
-*            bat中存放的为windows系统快捷操作, 如一键生成package.json, 一键安装依赖等
-*         2. 加入fissionConfig配置,详细说明查看定义处
-*         3. 加入对html中图片路径的替换
-*
-* PS: 对下一个版本的想法:
-*   1. 由于前面版本中没有对js的支持, 下一版本加入.
-*/
+ * Fission 前端集成开发环境 v0.0.5
+ * Copyright 2015, Troy
+ * Create: 2015-11-3
+ * Update: 2015年12月3日16:44:26
+ * Remark: 1. 加入js模块合并的支持
+ *         2. 修改静态文件文件摘要后戳生成, 将gulp-rev改为gulp-rev-append, 并小幅修改gulp-rev-append插件详情参见github
+ *         3. 加入生成html时修改js,css后戳
+ *         4. 加入fission-config.js文件, 主要用于配置fission中各项功能参数
+ ***************************v0.0.4***************************************
+ *         1. 大幅修改文件结构, 这样构建有助于更清晰的对前端进行开发
+ *            wwwroot文件夹为发布后的文件存放地, 可以直接映射IIS进行访问
+ *            src为开发资源文件夹,存放各种原始文件
+ *            bat中存放的为windows系统快捷操作, 如一键生成package.json, 一键安装依赖等
+ *         2. 加入fissionConfig配置,详细说明查看定义处
+ *         3. 加入对html中图片路径的替换
+ *
+ * PS: 对下一个版本的想法:
+ *   1. 由于前面版本中没有对js的支持, 下一版本加入.
+ */
 
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
-    uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
     spritesmith = require('gulp.spritesmith'),
     //browser-sync 2.0+ 官方推荐使用方式.
@@ -26,53 +30,51 @@ var gulp = require('gulp'),
     pngquant = require('imagemin-pngquant'),
     fileinclude = require('gulp-file-include'),
     replace = require("gulp-replace"),
-    rev = require('gulp-rev'),
-    revCollector = require('gulp-rev-collector'),
-    clean = require('gulp-clean');
+    rev = require('gulp-rev-append'),
+    clean = require('gulp-clean'),
+    concat = require("gulp-concat");
 
-var fissionConfig = {
-    //css与html源文件中写的文件夹名字, 注意html与css访问图片的文件夹要相同
-    //如: css代码background: url(../image/a.png)中image请写到下面的配置中
-    //如: html代码中<img src="../image/b.jpg"/>中image写在下面配置中
-    //说了这些,其实你只要按照我的文件结构,其他都不用管.
-    replace_image_folder_name: "image",
-    //生成css文件之后, 图片文件的路径
-    //可以为http://pic.fission.com/image
-    replace_image_http_path: "/image",
-    //browser-sync访问页面的端口
-    local_port: 8080,
-    //browser-sync访问的默认页面
-    local_default_page: "detail.html"
-};
+var fissionConfig = require('./fission-config');
 
 var task_function = {
     html_include: function() {
-        return gulp.src(['src/sass/signature/*.json', "src/html/*.html", "!src/html/partial/*.html"])
+        return gulp.src(["src/html/*.html"])
             .pipe(fileinclude({
                 prefix: "@@@",
                 basepath: "@file"
             }))
-            .pipe(revCollector({
-                replaceReved: true
-            }))
-            .pipe(replace(RegExp('src=\".*' + fissionConfig.replace_image_folder_name + '/', "g"), "src=\""+fissionConfig.replace_image_http_path + "/"))
-            .pipe(gulp.dest("./wwwroot"));
+            .pipe(replace(RegExp('src=\".*' + fissionConfig.replace_image_folder_name + '/', "g"), "src=\"" + fissionConfig.replace_image_http_path + "/"))
+            .pipe(replace(RegExp('src=\".*' + fissionConfig.replace_js_folder_name + '/', "g"), "src=\"" + fissionConfig.replace_js_http_path + "/"))
+            .pipe(replace(RegExp('href=\".*' + fissionConfig.replace_css_folder_name + '/', "g"), "href=\"" + fissionConfig.replace_css_http_path + "/"))
+            .pipe(gulp.dest("./wwwroot")).pipe(rev()).pipe(gulp.dest("./wwwroot"));
+
     }
 };
 
 //gulp 执行主方法 (命令行如果不指定执行方法, 则默认执行该方法)
 gulp.task('default', function() {
-    gulp.run('browser-sync', 'build-sass-and-html-include', 'watch');
+    gulp.run('browser-sync', 'build-sass-and-html-include', 'build-script-and-html-include', 'watch');
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/sass/**/*.scss', ['build-sass-and-html-include']);
+    gulp.watch(['src/sass/**/*.scss'], ['build-sass-and-html-include']);
+    gulp.watch(['src/script/**/*.js'], ['build-script-and-html-include']);
     gulp.watch('src/html/**/*.html', ["html-include"]);
     gulp.watch('src/sprite/**/*.png', ['sprite']);
 });
 
+/*****************************************************************************************
+************************************html生成**********************************************
+******************************************************************************************/
+//合并html
+gulp.task("html-include", task_function.html_include);
+
+
+/*****************************************************************************************
+************************************css生成***********************************************
+******************************************************************************************/
 //因为生成css之后才能确定文件签名, 所以在watch的时候需要调用这个方法.
-//这个方法的流程为先生成css, 确定文件签名, 再合并html, 最后根据签名的.json文件修改引用
+//这个方法的流程为先生成css, 确定文件签名, 再合并html, 最后根据发布后的文件摘要算法修改引用
 gulp.task('build-sass-and-html-include', ['build-sass'], task_function.html_include);
 
 //编译sass, 依赖删除生成的css文件
@@ -95,11 +97,8 @@ gulp.task('build-sass', ['remove-css'], function() {
         }))
         //压缩css
         .pipe(minifycss())
-        .pipe(rev())
         //输出css
         .pipe(gulp.dest('wwwroot/css'))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('src/sass/signature'));
 });
 
 gulp.task("remove-css", function() {
@@ -107,9 +106,40 @@ gulp.task("remove-css", function() {
         .pipe(clean());
 });
 
-//合并html
-gulp.task("html-include", task_function.html_include);
+/*****************************************************************************************
+*************************************js生成***********************************************
+******************************************************************************************/
+gulp.task('build-script-and-html-include', ["script"], task_function.html_include);
 
+gulp.task("script", ['remove-js'], function() {
+
+    var js_modules = fissionConfig.js_modules;
+    js_modules.forEach(function(obj) { //合并压缩package.json里指定的文件
+        if (!obj.build) {
+            return;
+        }
+        var module_array = [];
+        obj.modules.forEach(function(module) {
+            module_array.push("src/script/" + module + ".js");
+        });
+
+        gulp.src(module_array)
+            .pipe(concat(obj.name + ".js"))
+            .pipe(gulp.dest('wwwroot/js/'))
+    });
+    return;
+});
+
+gulp.task("remove-js", function() {
+    return gulp.src("wwwroot/js/**/*.js")
+        .pipe(clean());
+});
+
+
+
+/*****************************************************************************************
+*************************************刷新浏览器*********************************************
+******************************************************************************************/
 //自动刷新网页
 gulp.task('browser-sync', function() {
     //browser-sync 2.0+ 官方推荐使用方式.
@@ -127,6 +157,9 @@ gulp.task('browser-sync', function() {
     });
 });
 
+/*****************************************************************************************
+*************************************图片生成*********************************************
+******************************************************************************************/
 //雪碧图生成
 gulp.task('sprite', ['imagemin'], function() {
     //设置雪碧图文件
@@ -164,3 +197,7 @@ gulp.task('imagemin', function() {
         }))
         .pipe(gulp.dest('src/sprite.min'));
 });
+
+gulp.task('test', function() {
+    console.log(require('./fission-config'));
+})

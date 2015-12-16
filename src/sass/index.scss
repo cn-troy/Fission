@@ -1,0 +1,211 @@
+@import "util/sprite";
+@import "util/var";
+@import "util/mixin";
+@import "util/base";
+@import "partial/nav";
+body{
+	background: #f0f0f0;
+	padding-bottom: 60px;
+}
+.download {
+    width: 100%;
+    height: 55px;
+    background: rgba(#000, .86);
+    position: relative;
+    .close {
+        position: absolute;
+        left: 10px;
+        top: 18px;
+        @include sprite_2x($icon-index-download-close);
+    }
+    .logo {
+        position: absolute;
+        left: 50px;
+        top: 10px;
+        @include sprite_2x($icon_index_logo);
+    }
+    .btn {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        @include sprite_2x($icon_index_download);
+    }
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    li {
+        display: inline-block;
+        width: 100%;
+    }
+    a,
+    img {
+        width: 100%;
+    }
+}
+
+.quick-entry-nav {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #dedede;
+    padding: 15px 0 17px 0;
+    background: #fff;
+    a {
+        display: inline-block;
+        width: 25%;
+        text-align: center;
+        &:before {
+            display: inline-block;
+            content: ' ';
+        }
+        &:nth-child(1):before {
+            @include sprite_2x($icon_index_signin);
+        }
+        &:nth-child(2):before {
+            @include sprite_2x($icon_index_luckydraw);
+        }
+        &:nth-child(3):before {
+            @include sprite_2x($icon_index_testeat);
+        }
+        &:nth-child(4):before {
+            @include sprite_2x($icon_index_order);
+        }
+    }
+}
+
+.today-sale-warp,
+.next-sale-warp,
+.event-sale-warp,
+.curr-week-sale-warp {
+	background: #fff;
+    margin-top: 10px;
+    border: 1px solid #dedede;
+    border-left: none;
+    border-right: none;
+    h2 {
+        width: 100%;
+        padding: 10px 0 10px 0;
+        font-size: 17px;
+        text-align: center;
+        font-weight: normal;
+    }
+    a,
+    img {
+        width: 100%;
+    }
+    li {
+        margin-bottom: 10px;
+        position: relative;
+        color: #fff;
+    }
+}
+
+
+.module,
+.module-inline {
+    padding: 0 10px;
+}
+
+.module {
+    .timeout {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(#000, .4);
+        padding: 5px;
+        &:before {
+            content: '';
+            display: inline-block;
+            vertical-align: text-bottom;
+            margin-right: 5px;
+            @include sprite_2x($icon_index_clock);
+        }
+    }
+    .sellout {
+        position: absolute;
+        width: 68px;
+        height: 68px;
+        top: 50%;
+        left: 50%;
+        margin: -34px 0 0 -32px;
+        background: rgba(#000, .6);
+        border-radius: 34px;
+        color: #fff;
+        font-size: 11px;
+        text-align: center;
+        line-height: 68px;
+    }
+    .not-bigin-warp {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(#000, .6);
+        i {
+            font-size: 11px;
+        }
+        i:before {
+            content: '';
+            display: inline-block;
+            vertical-align: text-bottom;
+            margin-right: 5px;
+            @include sprite_2x($icon_index_clock);
+        }
+    }
+    .not-bigin-text {
+        position: absolute;
+        width: 82px;
+        height: 37px;
+        top: 50%;
+        left: 50%;
+        margin: -19px 0 0 -41px;
+        font-size: 20px;
+        overflow: hidden;
+        line-height: 18px;
+    }
+}
+.curr-week-sale-warp{
+	border-bottom: none;
+	h2{
+		padding-bottom: 0;
+	}
+}
+.module-inline {
+	border-bottom: 1px solid #dedede;
+	padding: 15px 0 15px 10px;
+	display: block;
+	width: auto !important;
+	img{
+		display: inline-block;
+		width: 48%;
+	}
+}
+.sale-detail-warp{
+	display: inline-block;
+	width: 43%;
+	margin-left: 10px;
+	h3{
+		font-size: 14px;
+	}
+	.price{
+		display: block;
+		margin-top: 19px;
+		color: red;
+		font-size: 17px;
+		&:before{
+			font-size: 12px;
+			content: '¥ ';
+		}
+	}
+	del{
+		&:before{
+			content: '¥ ';
+		}
+		color: #999;
+	}
+}
+

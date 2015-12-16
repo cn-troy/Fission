@@ -1,10 +1,22 @@
 @mixin eps() {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-@mixin frameCenter{
-	width: $html_width;
-	margin:0 auto;
+@mixin frame_center {
+    margin: 0 auto;
+}
+
+@mixin sprite_2x($sprite) {
+    width: nth($sprite, 5) / 2;
+    height: nth($sprite, 6) / 2;
+    $sprite-image: nth($sprite, 9);
+    background-image: url(#{$sprite-image});
+    //web app 需要将所有尺寸 / 2, 定位也要 / 2
+    background-size: $spritesheet-width / 2;
+    $sprite-offset-x: nth($sprite, 3);
+    $sprite-offset-y: nth($sprite, 4);
+    //web app 需要将所有尺寸 / 2, 定位也要 / 2
+    background-position: $sprite-offset-x / 2 $sprite-offset-y / 2;
 }
